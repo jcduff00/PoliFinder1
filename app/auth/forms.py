@@ -13,12 +13,12 @@ class SignUpForm(FlaskForm):
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user:
-            raise ValidationError('That username is taken. Please choose a different one.')
+            raise ValidationError('That username is taken by another user.')
 
 
 class LoginForm(FlaskForm):
     username = StringField('User Name',
-        validators=[DataRequired(), Length(min=3, max=50)])
+        validators=[DataRequired(), Length(50)])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log In')
 
