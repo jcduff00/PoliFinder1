@@ -1,8 +1,7 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
-from datetime import date, datetime
 from app.models import Politician, District, User
-from main.forms import PoliticianForm, DistrictForm, LoginForm, SignUpForm
+from main.forms import PoliticianForm, DistrictForm
 
 from app.extensions import app, db
 import bcrypt
@@ -16,11 +15,11 @@ auth = Blueprint("auth", __name__)
 
 @main.route('/')
 def homepage():
-    all_suits = Politician.query.all()
+    all_politicians = Politician.query.all()
     print(all_politicians)
     return render_template('home.html', all_politicians=all_politicians)
 
-@main.route('/new_store', methods=['GET', 'POST'])
+@main.route('/new_politician', methods=['GET', 'POST'])
 @login_required
 def new_store():
 
@@ -28,15 +27,17 @@ def new_store():
 
     if form.validate_on_submit(): 
         new_store = Politician(
-            title = form.title.data, 
-            address = form.address.data 
+            name = form.name.data, 
+            office = form.office.data, 
+            party = form.party.data,
+            photo_url = form.photo_url.data
         )
 
-        db.session.add(new_store)
+        db.session.add(new_politician)
         db.session.commit()
              
-        flash('This store has been added. Thank you!')
-        return redirect(url_for('main.store_detail', politician_id = new_politician))
+        flash('Politician added to our roster. Thank you!')
+        return redirect(url_for('main.politician_detail', politician_id = new_politician))
     else: 
         return render_template('new_store.html')
 
@@ -44,13 +45,13 @@ def new_store():
 @login_required
 def new_item():
 
-    form = GroceryItemForm()
+    form = DistrictForm()
 
     if form.validate_on_submit(): 
-         new_item = GroceryItem(
+         new_item = District(
               name = form.name.data, 
-              price = form.price.data, 
-              category = form.category.data, 
+              state = form.state.data,
+              region = form.region.data, 
               photo_url = form.photo_url.data, 
               store_id = form.store.data
               created_by = current_user
