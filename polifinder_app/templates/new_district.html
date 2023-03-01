@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>New District</h1>
+
+<form method="POST">
+    <fieldset>
+        <legend>Enter the district's information:</legend>
+            {{ form.csrf_token }}
+            {{ form.name.label }}
+            {{ form.name }}
+            {% for error in form.name.errors %}
+                <ul>
+                    <li class="error">{{ error }}</li>
+                </ul>
+            {% endfor %}
+
+            {{ form.state.label }}
+            {{ form.state }}
+            {% for error in form.state.errors %}
+                <ul>
+                    <li class="error">{{ error }}</li>
+                </ul>
+            {% endfor %}
+        <input type="submit" value="Submit">
+    </fieldset>
+</form>
+
+
+{% endblock %}

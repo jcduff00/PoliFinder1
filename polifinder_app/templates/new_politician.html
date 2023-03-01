@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>New Politician</h1>
+
+<form method="POST">
+    <fieldset>
+        <legend>Please enter your information:</legend>
+            {{ form.csrf_token }}
+            {{ form.name.label }}
+            {{ form.name }}
+            {% for error in form.name.errors %}
+                <ul>
+                    <li class="error">{{ error }}</li>
+                </ul>
+            {% endfor %}
+
+            {{ form.office.label }}
+            {{ form.office }}
+            {% for error in form.office.errors %}
+                <ul>
+                    <li class="error">{{ error }}</li>
+                </ul>
+            {% endfor %}
+
+            {{ form.party.label }}
+            {{ form.party }}
+            {% for error in form.party.errors %}
+                <ul>
+                    <li class="error">{{ error }}</li>
+                </ul>
+            {% endfor %}
+
+            {{ form.photo_url.label }}
+            {{ form.photo_url }}
+            {% for error in form.photo_url.errors %}
+                <ul>
+                    <li class="error">{{ error }}</li>
+                </ul>
+            {% endfor %}
+
+            {{ form.district.label }}
+            {{ form.district }}
+            {% for error in form.district.errors %}
+                <ul>
+                    <li class="error">{{ error }}</li>
+                </ul>
+            {% endfor %}
+        <input type="submit" value="Submit">
+    </fieldset>
+</form>
+
+{% endblock %}
