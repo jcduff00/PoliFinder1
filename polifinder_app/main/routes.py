@@ -25,7 +25,7 @@ def new_politician():
     form = PoliticianForm()
 
     if form.validate_on_submit(): 
-        new_store = Politician(
+        new_politician = Politician(
             name = form.name.data, 
             office = form.office.data, 
             party = form.party.data,
@@ -39,7 +39,7 @@ def new_politician():
         flash('Politician added to our roster. Thank you!')
         return redirect(url_for('main.politician_detail', politician_id = new_politician))
     else: 
-        return render_template('new_politician.html')
+        return render_template('new_politician.html', form=form)
 
 @main.route('/new_district', methods=['GET', 'POST'])
 @login_required
@@ -48,13 +48,13 @@ def new_district():
     form = DistrictForm()
 
     if form.validate_on_submit(): 
-         new_item = District(
+         new_district = District(
               name = form.name.data, 
               state = form.state.data,
               region = form.region.data
          )
 
-         db.session.add(new_item)
+         db.session.add(new_district)
          db.session.commit()
 
          flash('District added to our list. Thank you!')
@@ -93,5 +93,5 @@ def politician_detail(politician_id):
         flash('This politician information has been updated. Thank you!')
         return redirect(url_for('main.politician_detail', politician_id = politician))
     else: 
-        item = Politician.query.get(politician_id)
+        politician = Politician.query.get(politician_id)
         return render_template('politician_detail.html', politician=politician)
