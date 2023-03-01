@@ -5,7 +5,7 @@ from app.models import User
 from app.extensions import bcrypt
 
 class SignUpForm(FlaskForm):
-    username = StringField('User Name',
+    username = StringField('Usermame',
         validators=[DataRequired(), Length(min=3, max=50)])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Sign Up')
@@ -17,8 +17,8 @@ class SignUpForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    username = StringField('User Name',
-        validators=[DataRequired(), Length(50)])
+    username = StringField('Username',
+        validators=[DataRequired(), Length(80)])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log In')
 
@@ -31,4 +31,4 @@ class LoginForm(FlaskForm):
         user = User.query.filter_by(username=self.username.data).first()
         if user and not bcrypt.check_password_hash(
                 user.password, password.data):
-            raise ValidationError('Password doesn\'t match. Please try again.')
+            raise ValidationError('Password does not match.')
