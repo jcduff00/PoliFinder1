@@ -1,9 +1,9 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import login_required
-from app.models import Politician, District, User
-from main.forms import PoliticianForm, DistrictForm
+from polifinder_app.models import Politician, District, User
+from polifinder_app.main.forms import PoliticianForm, DistrictForm
 
-from app.extensions import app, db
+from polifinder_app.extensions import app, db
 import bcrypt
 
 main = Blueprint("main", __name__)

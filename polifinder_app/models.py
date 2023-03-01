@@ -1,7 +1,6 @@
 from sqlalchemy_utils import URLType
-
-from app.extensions import db
-from app.utils import FormEnum
+from polifinder_app.extensions import db
+import enum
 from flask_login import UserMixin
 
 class User(UserMixin, db.Model):
@@ -9,16 +8,16 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     favorite_politicians_list = db.relationship(
-        'Politician', secondary='user_politician', back_populates='politicians')
+        'Politician', secondary='favorite_politician', back_populates='users_who_favorited')
 
 class District(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     state = db.Column(db.String(80), nullable=False)
     region = db.Column(db.String(200), nullable=False)
-    politicians = db.relationship('Politician', back_populates='district')
+    politician = db.relationship('Politician', back_populates='district')
 
-class PoliticianParty(FormEnum): 
+class PoliticianParty(enum.Enum): 
     DEMOCRATIC = "Democratic"
     REPUBLICAN = "Republican"
     LIBERTARIAN = "Libertarian"
@@ -33,9 +32,10 @@ class Politician(db.Model):
     photo_url = db.Column(URLType)
     district_id = db.Column(
         db.Integer, db.ForeignKey('district.id'), nullable=False)
-    district = db.relationship('District', back_populates='politicians')
+    district = db.relationship('District', back_populates='politician')
+    users_who_favorited = db.relationship('User', secondary='favorite_politician', back_populates='favorite_politicians_list')
 
-favorite_politicians_table = db.Table('user_politician', 
+favorite_politicians_table = db.Table('favorite_politician', 
     db.Column('politician_id', db.Integer, db.ForeignKey('politician.id')),
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
 )

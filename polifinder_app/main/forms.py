@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, SubmitField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired
-from app.models import Politician, District
+from polifinder_app.models import Politician, District
 
 class DistrictForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])

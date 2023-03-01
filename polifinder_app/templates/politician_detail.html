@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Politician - {{ politician.name }}</h1>
+
+<p><img src="{{ politician.photo_url }}" width="300px" height="180px"></p>
+
+<p><strong>Office:</strong> {{ politician.office }}</p>
+
+<p><strong>Party:</strong> {{ politician.party }}</p>
+
+<p><strong>District:</strong> {{ politician.district.name }}</p>
+
+<h2>Edit Politician Info</h2>
+
+<form>
+    <fieldset>
+        <legend>Please enter your information:</legend>
+
+        <p><em>ADD FORM FIELDS</em></p>
+
+        <input type="submit" value="Submit">
+    </fieldset>
+</form>
+
+{% endblock %}

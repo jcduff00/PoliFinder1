@@ -3,14 +3,14 @@
 
 <h1>PoliFinder</h1>
 
-<p><em>Find YOUR local representative and make friends with them today :)</em></p>
+<p><em>Find YOUR local representative and be their friend</em></p>
 
-<h2>All Stores</h2>
+<h2>All Politicians</h2>
 
 {% for politician in all_politicians %}
 <div class="politician">
     <a href="/politician/{{ politician.id }}">{{ politician.name }}</a> - 
-    {{ .district.politicians|length }} politicians
+    {{ district.politician|length }} districts
     <p><strong>Party</strong> {{ politician.party }}</p>
 </div>
 {% endfor %}
