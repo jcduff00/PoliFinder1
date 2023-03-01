@@ -1,6 +1,7 @@
 from sqlalchemy_utils import URLType
 
 from app.extensions import db
+from app.utils import FormEnum
 from flask_login import UserMixin
 
 class User(UserMixin, db.Model):
@@ -17,11 +18,18 @@ class District(db.Model):
     region = db.Column(db.String(200), nullable=False)
     politicians = db.relationship('Politician', back_populates='district')
 
+class PoliticianParty(FormEnum): 
+    DEMOCRATIC = "Democratic"
+    REPUBLICAN = "Republican"
+    LIBERTARIAN = "Libertarian"
+    GREEN = "Green"
+    OTHER = "Other"
+
 class Politician(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     office = db.Column(db.String(100), nullable=False)
-    party = db.Column(db.Enum(PoliticianParty), default=PoliticianCategory.OTHER)
+    party = db.Column(db.Enum(PoliticianParty), default=PoliticianParty.OTHER)
     photo_url = db.Column(URLType)
     district_id = db.Column(
         db.Integer, db.ForeignKey('district.id'), nullable=False)

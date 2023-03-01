@@ -21,7 +21,7 @@ def homepage():
 
 @main.route('/new_politician', methods=['GET', 'POST'])
 @login_required
-def new_store():
+def new_politician():
 
     form = PoliticianForm()
 
@@ -30,7 +30,8 @@ def new_store():
             name = form.name.data, 
             office = form.office.data, 
             party = form.party.data,
-            photo_url = form.photo_url.data
+            photo_url = form.photo_url.data,
+            district_id = form.district.data
         )
 
         db.session.add(new_politician)
@@ -39,11 +40,11 @@ def new_store():
         flash('Politician added to our roster. Thank you!')
         return redirect(url_for('main.politician_detail', politician_id = new_politician))
     else: 
-        return render_template('new_store.html')
+        return render_template('new_politician.html')
 
-@main.route('/new_item', methods=['GET', 'POST'])
+@main.route('/new_district', methods=['GET', 'POST'])
 @login_required
-def new_item():
+def new_district():
 
     form = DistrictForm()
 
@@ -51,19 +52,16 @@ def new_item():
          new_item = District(
               name = form.name.data, 
               state = form.state.data,
-              region = form.region.data, 
-              photo_url = form.photo_url.data, 
-              store_id = form.store.data
-              created_by = current_user
+              region = form.region.data
          )
 
          db.session.add(new_item)
          db.session.commit()
 
-         flash('This item has been added. Thank you!')
-         return redirect(url_for('main.item_detail', item_id = new_item.id))
+         flash('District added to our list. Thank you!')
+         return redirect(url_for('main.district_detail', district_id = new_district.id))
     else: 
-         return render_template('new_item.html', form = form)
+         return render_template('new_district.html', form = form)
 
 @main.route('/store/<store_id>', methods=['GET', 'POST'])
 @login_required
