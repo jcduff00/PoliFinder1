@@ -5,8 +5,20 @@
         <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
-        <!-- Add base html here. -->
-        
-        {% block content %}{% endblock %}
+        <div id="content">
+            {% for message in get_flashed_messages() %}
+                <p>{{ message }}</p>
+            {% endfor %}
+            <nav>
+                <a href="/">Home</a>
+                <div>
+                    <a href="/new_politician">New Politician</a>
+                    <a href="/new_district">New District</a>
+                    <a href="/signup">Sign Up</a>
+                    <a href="/login">Log In</a>
+                </div>
+            </nav>
+            {% block content %}{% endblock %}
+        </div>
     </body>
 </html>
