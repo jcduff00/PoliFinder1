@@ -1,12 +1,17 @@
-# import app
 from flask import Blueprint
 from flask import Blueprint, request, render_template, redirect, url_for, flash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, LoginManager
 from polifinder_app.models import User
 from polifinder_app.auth.forms import SignUpForm, LoginForm
 from polifinder_app.extensions import app, db, bcrypt
 
 auth = Blueprint("auth", __name__)
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
