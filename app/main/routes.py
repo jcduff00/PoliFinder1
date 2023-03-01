@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
-from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import login_required
 from app.models import Politician, District, User
 from main.forms import PoliticianForm, DistrictForm
 
@@ -7,7 +7,6 @@ from app.extensions import app, db
 import bcrypt
 
 main = Blueprint("main", __name__)
-auth = Blueprint("auth", __name__)
 
 ##########################################
 #           Routes                       #
@@ -63,77 +62,36 @@ def new_district():
     else: 
          return render_template('new_district.html', form = form)
 
-@main.route('/store/<store_id>', methods=['GET', 'POST'])
+@main.route('/district/<district_id>', methods=['GET', 'POST'])
 @login_required
-def store_detail(store_id):
-    store = GroceryStore.query.get(store_id)
-    form = GroceryStoreForm(obj=store)
+def district_detail(district_id):
+    district = District.query.get(district_id)
+    form = DistrictForm(obj=district)
 
     if form.validate_on_submit(): 
-        form.populate_obj(store)
-        db.session.add(store)
+        form.populate_obj(district)
+        db.session.add(district)
         db.session.commit()
 
-        flash('Your store has been validated and updated. Thank you!')
-        return redirect(url_for('main.store_detail', store_id = store))
+        flash('Your district has been validated and updated. Thank you!')
+        return redirect(url_for('main.district_detail', district_id = district))
     else: 
-        store = GroceryStore.query.get(store_id)
-        return render_template('store_detail.html', store=store)
+        district = District.query.get(district_id)
+        return render_template('district_detail.html', district=district)
 
-@main.route('/item/<item_id>', methods=['GET', 'POST'])
+@main.route('/politician/<politician_id>', methods=['GET', 'POST'])
 @login_required
-def item_detail(item_id):
-    item = GroceryItem.query.get(item_id)
-    form = GroceryItemForm(obj=item)
+def politician_detail(politician_id):
+    politician = Politician.query.get(politician_id)
+    form = PoliticianForm(obj=politician)
 
     if form.validate_on_submit(): 
-        form.populate_obj(item)
-        db.session.add(item)
+        form.populate_obj(politician)
+        db.session.add(politician)
         db.session.commit()
 
-        flash('Your item has been validated and updated. Thank you!')
-        return redirect(url_for('main.item_detail', item_id = item))
+        flash('This politician information has been updated. Thank you!')
+        return redirect(url_for('main.politician_detail', politician_id = politician))
     else: 
-        item = GroceryItem.query.get(item_id)
-        return render_template('item_detail.html', item=item)
-
-@auth.route('/signup', methods=['GET', 'POST'])
-def signup():
-    print('in signup')
-    form = SignUpForm()
-    if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(
-            username=form.username.data,
-            password=hashed_password
-        )
-        db.session.add(user)
-        db.session.commit()
-        flash('Account Created.')
-        print('created')
-        return redirect(url_for('auth.login'))
-    print(form.errors)
-    return render_template('signup.html', form=form)
-
-
-@auth.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        login_user(user, remember=True)
-        next_page = request.args.get('next')
-        return redirect(next_page if next_page else url_for('main.homepage'))
-    return render_template('login.html', form=form)
-
-@auth.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('main.homepage'))
-
-@main.route('/shopping_list')
-@login_required
-def shopping_list():
-    shopping_list()
-    return redirect(url_for('main.item_detail'))
+        item = Politician.query.get(politician_id)
+        return render_template('politician_detail.html', politician=politician)
