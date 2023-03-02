@@ -3,8 +3,7 @@ from flask_login import login_required
 from polifinder_app.models import Politician, District, User
 from polifinder_app.main.forms import PoliticianForm, DistrictForm
 
-from polifinder_app.extensions import app, db
-import bcrypt
+from polifinder_app.extensions import app, db, bcrypt
 
 main = Blueprint("main", __name__)
 

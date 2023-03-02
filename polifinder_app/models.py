@@ -5,7 +5,7 @@ from flask_login import UserMixin
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     favorite_politicians_list = db.relationship(
         'Politician', secondary='favorite_politician', back_populates='users_who_favorited')
@@ -29,7 +29,7 @@ class Politician(db.Model):
     name = db.Column(db.String(100), nullable=False)
     office = db.Column(db.String(100), nullable=False)
     party = db.Column(db.Enum(PoliticianParty), default=PoliticianParty.OTHER)
-    photo_url = db.Column(URLType)
+    photo_url = db.Column(db.String(100), nullable=False)
     district_id = db.Column(
         db.Integer, db.ForeignKey('district.id'), nullable=False)
     district = db.relationship('District', back_populates='politician')

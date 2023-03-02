@@ -5,7 +5,7 @@ from polifinder_app.models import User
 from polifinder_app.extensions import bcrypt
 
 class SignUpForm(FlaskForm):
-    username = StringField('Usermame',
+    username = StringField('Username',
         validators=[DataRequired(), Length(min=3, max=50)])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Sign Up')
@@ -17,7 +17,7 @@ class SignUpForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     username = StringField('Username',
-        validators=[DataRequired(), Length(80)])
+        validators=[DataRequired(), Length(max=80)])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log In')
 
