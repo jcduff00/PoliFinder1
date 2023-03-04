@@ -22,6 +22,14 @@
                     <li class="error">{{ error }}</li>
                 </ul>
             {% endfor %}
+
+            {[ form.region.label ]}
+            {{ form.region }}
+            {% for error in form.region.errors %}
+                <ul>
+                    <li class="error">{{ error }}</li>
+                </ul>
+            {% endfor %}
         <input type="submit" value="Submit">
     </fieldset>
 </form>

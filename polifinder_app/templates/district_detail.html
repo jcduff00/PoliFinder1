@@ -3,11 +3,10 @@
 
 <h1>{{ district.name }}</h1>
 
-<strong>State:</strong> {{ store.address }}
+<h4>{{ district.state }}</h4>
+<h4>{{ district.region}}</h4>
 
-<h2>Items</h2>
-
-<div class="items">
+<div class="politicians">
     {% for politician in district.politicians %}
     <div class="politician-details">
         <a href="/politician/{{ politician.id }}"><img src="{{ politician.photo_url }}" alt="{{ politician.name }}" width="270px">
@@ -18,7 +17,7 @@
 </div>
 
 
-<h2>Edit Store</h2>
+<h5>Edit details</h5>
 
 <form>
     <fieldset>
