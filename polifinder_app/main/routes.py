@@ -7,6 +7,25 @@ from polifinder_app.extensions import app, db, bcrypt
 
 main = Blueprint("main", __name__)
 
+def init_db():
+    db.drop_all()
+    db.create_all()
+
+a1 = District(name='MI05', state='Michigan', region='Midwest')
+db.session.add(a1)
+
+b1 = Politician(
+        name = 'Justin Amash',
+        office = 'Congressman',
+        party = "Libertarian",
+        photo_url = "https://en.m.wikipedia.org/wiki/File:Rep._Justin_Amash_-_114th_Congress.png",
+        district_id = a1,
+    )
+db.session.add(b1)
+db.session.commit(b1)
+
+init_db()
+
 ##########################################
 #           Routes                       #
 ##########################################

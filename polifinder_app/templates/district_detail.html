@@ -1,18 +1,18 @@
-% extends 'base.html' %}
+{% extends 'base.html' %}
 {% block content %}
 
-<h1>Store - {{ store.title }}</h1>
+<h1>{{ district.name }}</h1>
 
-<strong>Address:</strong> {{ store.address }}
+<strong>State:</strong> {{ store.address }}
 
 <h2>Items</h2>
 
 <div class="items">
-    {% for item in store.items %}
-    <div class="item-details">
-        <a href="/item/{{ item.id }}"><img src="{{ item.photo_url }}" alt="{{ item.name }}" width="200px">
-        <p><strong>{{ item.name }}</strong></p></a>
-        <p><strong>Price: ${{ item.price }}</strong></p>
+    {% for politician in district.politicians %}
+    <div class="politician-details">
+        <a href="/politician/{{ politician.id }}"><img src="{{ politician.photo_url }}" alt="{{ politician.name }}" width="270px">
+        <p><strong>{{ politician.name }}</strong></p></a>
+        <p><strong>Party: ${{ politician.party }}</strong></p>
     </div>
     {% endfor %}
 </div>
