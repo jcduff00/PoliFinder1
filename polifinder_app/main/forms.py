@@ -7,7 +7,7 @@ from polifinder_app.models import Politician, District
 class DistrictForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     state = StringField('State', validators=[DataRequired()])
-    region = SelectField('Region', validators=[DataRequired()])
+    region = StringField('Region', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
     pass

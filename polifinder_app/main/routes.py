@@ -10,19 +10,19 @@ main = Blueprint("main", __name__)
 def init_db():
     db.drop_all()
     db.create_all()
+    
+    a1 = District(name='MI05', state='Michigan', region='Midwest')
+    db.session.add(a1)
 
-a1 = District(name='MI05', state='Michigan', region='Midwest')
-db.session.add(a1)
-
-b1 = Politician(
-        name = 'Justin Amash',
-        office = 'Congressman',
-        party = "Libertarian",
-        photo_url = "https://en.m.wikipedia.org/wiki/File:Rep._Justin_Amash_-_114th_Congress.png",
-        district_id = a1,
-    )
-db.session.add(b1)
-db.session.commit(b1)
+    b1 = Politician(
+            name = 'Justin Amash',
+            office = 'Congressman',
+            party = 'LIBERTARIAN',
+            photo_url = "test",
+            district = a1
+        )
+    db.session.add(b1)
+    db.session.commit()
 
 init_db()
 
@@ -33,8 +33,10 @@ init_db()
 @main.route('/')
 def homepage():
     all_politicians = Politician.query.all()
+    all_districts = District.query.all()
     print(all_politicians)
-    return render_template('home.html', all_politicians=all_politicians)
+    print(all_districts)
+    return render_template('home.html', all_politicians=all_politicians, all_districts=all_districts)
 
 @main.route('/new_politician', methods=['GET', 'POST'])
 @login_required
