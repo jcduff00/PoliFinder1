@@ -17,7 +17,15 @@ class District(db.Model):
     region = db.Column(db.String(200), nullable=False)
     politician = db.relationship('Politician', back_populates='district')
 
-class PoliticianParty(enum.Enum): 
+class FormEnum(enum.Enum):
+    @classmethod
+    def choices(cls):
+        return [(choice.name, choice) for choice in cls]
+
+    def __str__(self):
+        return str(self.value)
+
+class PoliticianParty(FormEnum): 
     DEMOCRATIC = "Democratic"
     REPUBLICAN = "Republican"
     LIBERTARIAN = "Libertarian"
@@ -28,7 +36,7 @@ class Politician(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     office = db.Column(db.String(100), nullable=False)
-    party = db.Column(db.Enum(PoliticianParty), default=PoliticianParty.OTHER)
+    party = db.Column(db.Enum(PoliticianParty))
     photo_url = db.Column(db.String(100), nullable=False)
     district_id = db.Column(
         db.Integer, db.ForeignKey('district.id'), nullable=False)

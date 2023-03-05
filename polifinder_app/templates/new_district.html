@@ -23,7 +23,7 @@
                 </ul>
             {% endfor %}
 
-            {[ form.region.label ]}
+            {{ form.region.label }}
             {{ form.region }}
             {% for error in form.region.errors %}
                 <ul>

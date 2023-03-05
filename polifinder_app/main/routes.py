@@ -10,7 +10,7 @@ main = Blueprint("main", __name__)
 def init_db():
     db.drop_all()
     db.create_all()
-    
+
     a1 = District(name='MI05', state='Michigan', region='Midwest')
     db.session.add(a1)
 
@@ -22,6 +22,13 @@ def init_db():
             district = a1
         )
     db.session.add(b1)
+
+    u1 = User(
+        username="test-user",
+        password=bcrypt.generate_password_hash("1").decode('utf-8')
+    )
+    db.session.add(u1)
+
     db.session.commit()
 
 init_db()
@@ -50,9 +57,9 @@ def new_politician():
             office = form.office.data, 
             party = form.party.data,
             photo_url = form.photo_url.data,
-            district_id = form.district.data
+            district = form.district.data
         )
-
+        print('$DFKGJHGSFKSGDFGRSKDGSKKGJFJK', new_politician)
         db.session.add(new_politician)
         db.session.commit()
              
