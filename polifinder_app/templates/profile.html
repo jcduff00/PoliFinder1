@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p>
+    Welcome to {{ user.username }}'s profile.
+</p>
+
+<p>
+    {{ user.username }}'s favorite politicians:
+
+    <ul class="gallery">
+        {% for game in user_wishlist %}
+            <li class="box">
+                <a href="/politician/{{ politician.id }}">{{ politician.name }} representing {{ politician.district.name }}
+                    <img src="{{ politician.photo_url }}"> </a> 
+                    
+            </li>
+        {% endfor %}
+    </ul>
+      
+</p>
+
+{% endblock %}

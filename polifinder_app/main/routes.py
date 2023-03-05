@@ -25,7 +25,7 @@ def init_db():
 
     u1 = User(
         username="test-user",
-        password=bcrypt.generate_password_hash("1").decode('utf-8')
+        password=bcrypt.generate_password_hash("password").decode('utf-8')
     )
     db.session.add(u1)
 
