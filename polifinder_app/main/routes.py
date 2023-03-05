@@ -122,3 +122,11 @@ def politician_detail(politician_id):
     else: 
         politician = Politician.query.get(politician_id)
         return render_template('politician_detail.html', politician=politician)
+
+@main.route('/profile/<username>')
+def profile(username):
+    all_politicians = Politician.query.all()
+    user = Politician.query.filter_by(username=username).first()
+    favorite_politicians_list = user.favorite_politician
+
+    return render_template('profile.html', user=user, all_politicians=all_politicians, favorite_politicians_list=favorite_politicians_list)

@@ -10,7 +10,7 @@
 {% for politician in all_politicians %}
 <div class="politician">
     <a href="/politician/{{ politician.id }}">{{ politician.name }}</a> - 
-    <p><strong>Office</strong> {{ politician.office }}</p>
+    <p><strong>Office</strong> {{ politician.office }} ({{ politician.district.state }}) </p>
     <p><strong>Party</strong> {{ politician.party }}</p>
 </div>
 {% endfor %}
