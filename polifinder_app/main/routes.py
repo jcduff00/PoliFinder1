@@ -59,7 +59,6 @@ def new_politician():
             photo_url = form.photo_url.data,
             district = form.district.data
         )
-        print('$DFKGJHGSFKSGDFGRSKDGSKKGJFJK', new_politician)
         db.session.add(new_politician)
         db.session.commit()
              
@@ -85,9 +84,9 @@ def new_district():
          db.session.commit()
 
          flash('District added to our list. Thank you!')
-         return redirect(url_for('main.district_detail', district_id = new_district.id))
+         return redirect(url_for('main.district_detail', district_id = new_district))
     else: 
-         return render_template('new_district.html', form = form)
+         return render_template('new_district.html', form=form)
 
 @main.route('/district/<district_id>', methods=['GET', 'POST'])
 @login_required

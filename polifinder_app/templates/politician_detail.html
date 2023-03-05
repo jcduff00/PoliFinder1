@@ -15,10 +15,23 @@
 
 <form>
     <fieldset>
-        <legend>Enter your edits below:</legend>
+        <legend>Edit this politician below:</legend>
+        {{ form.csrf_token }}
 
-        <p><em>ADD FORM FIELDS</em></p>
+        {{ form.name.label }}
+        {{ form.name }}
 
+        {{ form.office.label }}
+        {{ form.office }}
+
+        {{ form.party.label }}
+        {{ form.party }}
+
+        {{ form.photo_url.label }}
+        {{ form.photo_url }}
+        
+        {{ form.district.label }}
+        {{ form.district }}
         <input type="submit" value="Submit">
     </fieldset>
 </form>
