@@ -1,7 +1,7 @@
 import unittest
 import app
 from polifinder_app.extensions import app, db, bcrypt
-from polifinder_app.models import Politician, District, User
+from polifinder_app.models import Politician, District, User, PoliticianParty
 
 """
 Run these tests with the command:
@@ -61,3 +61,40 @@ class MainTests(unittest.TestCase):
         self.assertIn('New Politician', response_text)
         self.assertIn('Log In', response_text)
         self.assertIn('Sign Up', response_text)
+
+    def test_create_politician(self):
+        create_politicians()
+        create_user()
+        login(self.app, 'me1', 'password')
+        post_data = {
+            'name': 'Marianne Williamson',
+            'office': 'Congresswoman',
+            'party': 'DEMOCRATIC',
+            'photo_url': 'test',
+            'district': 1
+        }
+        self.app.post('/new_politician', data=post_data)
+
+        created_politician = Politician.query.filter_by(name='Marianne Williamson').one()
+        self.assertIsNotNone(created_politician)
+        self.assertEqual(created_politician.district.name, 'CA30')
+
+    def test_update_politician(self):
+        create_politicians()
+        create_user()
+        login(self.app, 'me1', 'password')
+        post_data = {
+            'name': 'Ted Lieu',
+            'office': 'Congressman',
+            'party': 'DEMOCRATIC',
+            'photo_url': "test1",
+            'district': 1
+        }
+        self.app.post('/tank/1', data=post_data)
+
+        politician = Politician.query.get(1)
+        self.assertEqual(politician.name, 'Ted Lieu')
+        self.assertEqual(politician.office, 'Congressman')
+        self.assertEqual(politician.party, PoliticianParty.DEMOCRATIC)
+        self.assertEqual(politician.photo_url, "test1")
+        self.assertEqual(politician.district, 1)
