@@ -90,7 +90,7 @@ class MainTests(unittest.TestCase):
             'photo_url': "test1",
             'district': 1
         }
-        self.app.post('/tank/1', data=post_data)
+        self.app.post('/politician/1', data=post_data)
 
         politician = Politician.query.get(1)
         self.assertEqual(politician.name, 'Ted Lieu')
