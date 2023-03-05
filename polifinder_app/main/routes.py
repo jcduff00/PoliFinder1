@@ -14,14 +14,62 @@ def init_db():
     a1 = District(name='MI05', state='Michigan', region='Midwest')
     db.session.add(a1)
 
+    a2 = District(name='NJ03', state='New Jersey', region='Midatlantic')
+    db.session.add(a2)
+
+    a3 = District(name='FL01', state='Florida', region='Southeast')
+    db.session.add(a3)
+
+    a4 = District(name='OK05', state='Oklahoma', region='Southwest')
+    db.session.add(a4)
+
+    a5 = District(name='WA09', state='Washington', region='Northwest')
+    db.session.add(a5)
+
     b1 = Politician(
             name = 'Justin Amash',
             office = 'Congressman',
             party = 'LIBERTARIAN',
             photo_url = "test",
             district = a1
-        )
+    )
     db.session.add(b1)
+
+    b2 = Politician( 
+        name = 'Andy Kim', 
+        office = 'Congressman', 
+        party = 'DEMOCRATIC', 
+        photo_url = "test", 
+        district = a2
+    )
+    db.session.add(b2)
+
+    b3 = Politician( 
+        name = 'Matt Gaetz', 
+        office = 'Congressman', 
+        party = 'REPUBLICAN', 
+        photo_url = "test", 
+        district = a3
+    )
+    db.session.add(b3)
+
+    b4 = Politician( 
+        name = 'Stephanie Bice', 
+        office = 'Congresswoman',
+        party = 'REPUBLICAN', 
+        photo_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Rep._Stephanie_Bice%2C_117th_Congress.jpg/1200px-Rep._Stephanie_Bice%2C_117th_Congress.jpg", 
+        district = a4
+    )
+    db.session.add(b4) 
+
+    b5 = Politician( 
+        name = 'Pramila Jayapal',
+        office = 'Congresswoman', 
+        party = 'DEMOCRATIC', 
+        photo_url = "test", 
+        district = a5
+    )
+    db.session.add(b5) 
 
     u1 = User(
         username="test-user",
@@ -79,7 +127,6 @@ def new_district():
               state = form.state.data,
               region = form.region.data
          )
-
          db.session.add(new_district)
          db.session.commit()
 
