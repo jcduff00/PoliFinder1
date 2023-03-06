@@ -37,7 +37,7 @@ class Politician(db.Model):
     name = db.Column(db.String(100), nullable=False)
     office = db.Column(db.String(100), nullable=False)
     party = db.Column(db.Enum(PoliticianParty))
-    photo_url = db.Column(db.String(100), nullable=False)
+    photo_url = db.Column(db.String(1000), nullable=False)
     district_id = db.Column(
         db.Integer, db.ForeignKey('district.id'), nullable=False)
     district = db.relationship('District', back_populates='politician')
