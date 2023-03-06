@@ -34,11 +34,11 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         login_user(user, remember=True)
         next_page = request.args.get('next')
-        return redirect(next_page if next_page else url_for('main.homepage'))
+        return redirect(next_page if next_page else url_for('main.home'))
     return render_template('login.html', form=form)
 
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('main.homepage'))
+    return redirect(url_for('main.home'))

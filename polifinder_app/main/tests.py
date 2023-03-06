@@ -48,7 +48,7 @@ class MainTests(unittest.TestCase):
         db.drop_all()
         db.create_all()
 
-    def test_homepage_logged_in(self):
+    def test_home_logged_in(self):
         create_politicians()
         create_user()
         login(self.app, 'me1', 'password')

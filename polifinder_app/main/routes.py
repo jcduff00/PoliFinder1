@@ -86,12 +86,10 @@ init_db()
 ##########################################
 
 @main.route('/')
-def homepage():
+def home():
     all_politicians = Politician.query.all()
-    all_districts = District.query.all()
     print(all_politicians)
-    print(all_districts)
-    return render_template('home.html', all_politicians=all_politicians, all_districts=all_districts)
+    return render_template('home.html', all_politicians=all_politicians)
 
 @main.route('/new_politician', methods=['GET', 'POST'])
 @login_required
@@ -111,7 +109,7 @@ def new_politician():
         db.session.commit()
              
         flash('Politician added to our roster. Thank you!')
-        return redirect(url_for('main.politician_detail', politician_id = new_politician))
+        return redirect(url_for('main.politician_detail', politician_id = new_politician.id))
     else: 
         return render_template('new_politician.html', form=form)
 
@@ -131,26 +129,9 @@ def new_district():
          db.session.commit()
 
          flash('District added to our list. Thank you!')
-         return redirect(url_for('main.district_detail', district_id = new_district))
+         return redirect(url_for('main.home'))
     else: 
          return render_template('new_district.html', form=form)
-
-@main.route('/district/<district_id>', methods=['GET', 'POST'])
-@login_required
-def district_detail(district_id):
-    district = District.query.get(district_id)
-    form = DistrictForm(obj=district)
-
-    if form.validate_on_submit(): 
-        form.populate_obj(district)
-        db.session.add(district)
-        db.session.commit()
-
-        flash('Your district has been validated and updated. Thank you!')
-        return redirect(url_for('main.district_detail', district_id = district))
-    else: 
-        district = District.query.get(district_id)
-        return render_template('district_detail.html', district=district)
 
 @main.route('/politician/<politician_id>', methods=['GET', 'POST'])
 @login_required
@@ -159,15 +140,17 @@ def politician_detail(politician_id):
     form = PoliticianForm(obj=politician)
 
     if form.validate_on_submit(): 
-        form.populate_obj(politician)
-        db.session.add(politician)
+        politician.name = form.name.data
+        politician.office = form.office.data
+        politician.party = form.party.data
+        politician.photo_url = form.photo_url.data
+        politician.district = form.district.data
         db.session.commit()
 
         flash('This politician information has been updated. Thank you!')
-        return redirect(url_for('main.politician_detail', politician_id = politician))
+        return redirect(url_for('main.politician_detail', politician_id = politician_id))
     else: 
-        politician = Politician.query.get(politician_id)
-        return render_template('politician_detail.html', politician=politician)
+        return render_template('politician_detail.html', politician=politician, form=form)
 
 @main.route('/profile/<username>')
 def profile(username):
