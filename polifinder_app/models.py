@@ -12,9 +12,9 @@ class User(UserMixin, db.Model):
 
 class District(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False)
-    state = db.Column(db.String(80), nullable=False)
-    region = db.Column(db.String(200), nullable=False)
+    name = db.Column(db.String, nullable=False)
+    state = db.Column(db.String, nullable=False)
+    region = db.Column(db.String, nullable=False)
     politician = db.relationship('Politician', back_populates='district')
 
 class FormEnum(enum.Enum):
@@ -34,10 +34,10 @@ class PoliticianParty(FormEnum):
 
 class Politician(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    office = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String, nullable=False)
+    office = db.Column(db.String, nullable=False)
     party = db.Column(db.Enum(PoliticianParty))
-    photo_url = db.Column(db.String(1000), nullable=False)
+    photo_url = db.Column(db.String, nullable=False)
     district_id = db.Column(
         db.Integer, db.ForeignKey('district.id'), nullable=False)
     district = db.relationship('District', back_populates='politician')
